@@ -1,38 +1,30 @@
 sudo: false
-
 language: php
-
 notifications:
   email:
     on_success: never
     on_failure: change
-
 cache:
-  - composer
-  - $HOME/.composer/cache
-
+- composer
+- "$HOME/.composer/cache"
 php:
-  - 7.0
-
+- 7.0
 env:
-  - WP_VERSION=latest WP_MULTISITE=0
-  - WP_VERSION=nightly WP_MULTISITE=0
-
+- WP_VERSION=latest WP_MULTISITE=0
+- WP_VERSION=nightly WP_MULTISITE=0
 before_script:
-  - bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
-  - composer install
-
+- bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
+- composer install
 script:
-  - vendor/bin/phpunit
-
+- vendor/bin/phpunit
 after_success:
-  - sed -i -e "s/nightly/${TRAVIS_TAG}/" miya-child-pages-shortcode.php
-  - curl https://raw.githubusercontent.com/miya0001/auto-build/master/auto-build.sh | bash
+- sed -i -e "s/nightly/${TRAVIS_TAG}/" miya-child-pages-shortcode.php
+- curl https://raw.githubusercontent.com/miya0001/auto-build/master/auto-build.sh | bash
 
 deploy:
   provider: releases
   api_key:
-    secure: ZrO/V2/vXaYab3ZdKVh7ugdDYV0w3gzhP+vMiy/e4h13uIOexa9xEeGybSttu4QEehX/tv1tQoDHd8+ZHb1T9rsjkYdgLpJ2ljiUgWdV4MRHyVAXli7GMg/K3jvHNTqj1Avx3j3Tjw4gzrR16AOdO2JboKTppBvsr+SN4MT7TB9blnsm9X+8QDVM+yBy+qF8dclzfWK7EUu0PGFJxUApQWGmqHUwt1oRFzTNMe5sOh88dePbJ7JP1PyL9S/1v6M3fUKeeCoRMxVO/FoinfFlGIPSBZmol1PCoXYTjM4EEReVIY43rJJ/NFVPUodwCyxFuo1aEEgCokZo5OZ6DX4A1UIxOU3Nhcx8JYLwaMFy8l97PxmV+HVPoAH0aePEPtKFAO8BiOWXN0ACVB1eJ2Yi+usXRF/RzOQE8uF6ThnWhz8tn2rQlevKKvDKRNfN7P0ESv4L6K/3dc893+tSskZfzM+mcw2Z6V+4yuEmPNIIufzbfaU0I36kC5bJPygAUXJ6WzxIJ63ML2xSJrcVh3o7BMRaDRNgoM600I4tEOBISkevDMVc8WJ2DfSJvC5c8x5kb4CIn2cBohxPz/HPqBe26Y/zQEH1Sd2wFkZqr4E5oFBoMdPIxrhwfehS2zM13uE6JAqbErMjT1sOuh9CGawLvGrnP0XzAnXQoOvVzY2AtdA=
+    secure: r68k/l7en/3gzwoHySAwjV8tv47zydCBwYb0TkriBkDuwM7Fvgk+Hz/xPztuOWYY8t3u0sRbY4F6HqjFV8ozEWa0BGW51k8ZhblQ9HVcfyUZ0b/+2QU4bfNrP0CmREWgO/pUKK3yjd0vIVkdH6Otb/Ad5GyPdtpC8YlhhyqfmWnELCWM3zVPCIpe0wn3SryeW3dtfuKRAmjnrIDCxypGkizGWgsUGtbX2G/iUQFGdRzW+XdrVTqxMQhAHFvQw84dOvxKzbxnjHWprRPbFVoyhA17F/S63zO9EhxJMSn4bh7ZNwp32JFzXrStob+M4Hwd/FvxRQhqrD0LSKGvO3gk6wFttC8ljznaf2tRcTu/g9m396BO+EMq5kOXRuxeLpDxdAhkiHnSWr1/qNYpp/s+3aeoUF9b607nqCJa6cPvjhRFlo9d83cvcihRXMdZo7sxlLZ/h9mzzoPrW0JOkYkpa31E7mVRIXLDrU7l7IyXeNFTeSSPf0uuX3wZzHe437toyO6V3h/LDyFXM7bSPzd8ny3fD6N3uSuUj/f22oVB1123Sy6RwKiSwXs0XrcD0JVfoqmO16iLb34X3qZ7KHn8wh/cC3t11oa1NzJaTyazog7zpn4f/egx3ZJRvWFxW+j3la0HESsEOx6Dmbig9gGE5YQWmFHoIlyodsIBC04xQd4=
   file: miya-child-pages-shortcode.zip
   on:
     tags: true
