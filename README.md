@@ -26,12 +26,12 @@ Filters the parameters for `get_posts()`.
 
 ```
 array(
-  'post_status' => 'publish',
-  'post_type' => 'page',
-  'post_parent' => <The Post ID>,
-  'orderby' => 'menu_order',
-  'order' => 'ASC',
-  'nopaging' => true,
+	'post_status' => 'publish',
+	'post_type' => 'page',
+	'post_parent' => <The Post ID>,
+	'orderby' => 'menu_order',
+	'order' => 'ASC',
+	'nopaging' => true,
 );
 ```
 
@@ -49,11 +49,11 @@ Filters the HTML of the template.
 
 ```
 <section id="child-page-%post_id%" class="child-page" style="width: %width%;">
-  <div class="child-page-container">
-    <div class="post-thumbnail"><a href="%post_url%">%post_thumbnail%</a></div>
-    <h2 class="post-title"><a href="%post_url%">%post_title%</a></h2>
-    <p class="post-excerpt">%post_excerpt%</p>
-  </div>
+	<div class="child-page-container">
+		<div class="post-thumbnail"><a href="%post_url%">%post_thumbnail%</a></div>
+		<h2 class="post-title"><a href="%post_url%">%post_title%</a></h2>
+		<p class="post-excerpt">%post_excerpt%</p>
+	</div>
 </section>
 ```
 
