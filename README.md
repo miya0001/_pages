@@ -66,7 +66,7 @@ Following is an CSS example which uses CSS3 Flexbox.
 .child-pages
 {
 	display: flex;
-  flex-wrap: wrap;
+	flex-wrap: wrap;
 	margin-left: -8px;
 	margin-top: 1em;
 	margin-bottom: 1em;
