@@ -20,6 +20,20 @@ env:
 
 before_script:
   - bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
+  - composer install
 
 script:
-  - phpunit
+  - vendor/bin/phpunit
+
+after_success:
+  - sed -i -e "s/nightly/${TRAVIS_TAG}/" miya-child-pages-shortcode.php
+  - curl https://raw.githubusercontent.com/miya0001/auto-build/master/auto-build.sh | bash
+
+deploy:
+  provider: releases
+  api_key:
+    secure: ZrO/V2/vXaYab3ZdKVh7ugdDYV0w3gzhP+vMiy/e4h13uIOexa9xEeGybSttu4QEehX/tv1tQoDHd8+ZHb1T9rsjkYdgLpJ2ljiUgWdV4MRHyVAXli7GMg/K3jvHNTqj1Avx3j3Tjw4gzrR16AOdO2JboKTppBvsr+SN4MT7TB9blnsm9X+8QDVM+yBy+qF8dclzfWK7EUu0PGFJxUApQWGmqHUwt1oRFzTNMe5sOh88dePbJ7JP1PyL9S/1v6M3fUKeeCoRMxVO/FoinfFlGIPSBZmol1PCoXYTjM4EEReVIY43rJJ/NFVPUodwCyxFuo1aEEgCokZo5OZ6DX4A1UIxOU3Nhcx8JYLwaMFy8l97PxmV+HVPoAH0aePEPtKFAO8BiOWXN0ACVB1eJ2Yi+usXRF/RzOQE8uF6ThnWhz8tn2rQlevKKvDKRNfN7P0ESv4L6K/3dc893+tSskZfzM+mcw2Z6V+4yuEmPNIIufzbfaU0I36kC5bJPygAUXJ6WzxIJ63ML2xSJrcVh3o7BMRaDRNgoM600I4tEOBISkevDMVc8WJ2DfSJvC5c8x5kb4CIn2cBohxPz/HPqBe26Y/zQEH1Sd2wFkZqr4E5oFBoMdPIxrhwfehS2zM13uE6JAqbErMjT1sOuh9CGawLvGrnP0XzAnXQoOvVzY2AtdA=
+  file: miya-child-pages-shortcode.zip
+  on:
+    tags: true
+    repo: miya0001/miya-child-pages-shortcode

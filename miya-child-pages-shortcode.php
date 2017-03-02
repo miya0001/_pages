@@ -1,13 +1,11 @@
 <?php
 /*
-Plugin Name: Child Pages Shortcode
+Plugin Name: Child Pages Shortcode 2
 Author: Takayuki Miyauchi
-Plugin URI: https://github.com/miya0001/child-pages-shortcode
-Description: You can use shortcode for display child pages from the page.
-Version: 1.9.3
-Author URI: http://wpist.me/
-Domain Path: /languages
-Text Domain: child-pages-shortcode
+Plugin URI: https://github.com/miya0001/miya-child-pages-shortcode
+Description: A WordPress shotcode plugin which displays child pages.
+Version: nightly
+Author URI: http://miya.io/
 */
 
 $child_pages_shortcode = new Child_Pages_Shortcode();
@@ -63,6 +61,7 @@ class Child_Pages_Shortcode
 		$pages = get_posts( $args );
 		foreach ( $pages as $post ) {
 			setup_postdata( $post );
+
 			/*
 			 * Filter the $post data.
 			 *
