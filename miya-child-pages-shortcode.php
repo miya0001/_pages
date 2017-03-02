@@ -8,6 +8,15 @@ Version: nightly
 Author URI: http://miya.io/
 */
 
+require_once( dirname( __FILE__ ) . '/vendor/autoload.php' );
+add_action( 'init', function() {
+	$plugin_slug = plugin_basename( __FILE__ );
+	$gh_user = 'miya0001';
+	$gh_repo = 'miya-child-pages-shortcode';
+	// Activate automatic update.
+	new Miya\WP\GH_Auto_Updater( $plugin_slug, $gh_user, $gh_repo );
+} );
+
 $child_pages_shortcode = new Child_Pages_Shortcode();
 
 class Child_Pages_Shortcode
