@@ -8,7 +8,7 @@
 [child_pages]
 ```
 
-### Arguments
+### Attributes
 
 * `id` - Optional. The Post ID. Default value is the ID of the current page.
 * `size` - Optional. The size of the post thumbnail. Default is `post-thumbnail`.
@@ -43,6 +43,14 @@ Filters the post object.
 
 Filters the HTML.
 
+### child_pages_shortcode_container
+
+Filters the container HTML.
+
+```
+<div class="child-pages">%content%</div>
+```
+
 ### child_pages_shortcode_template
 
 Filters the HTML of the template.
@@ -51,7 +59,7 @@ Filters the HTML of the template.
 <section id="child-page-%post_id%" class="child-page" style="width: %width%;">
 	<div class="child-page-container">
 		<div class="post-thumbnail"><a href="%post_url%">%post_thumbnail%</a></div>
-		<h2 class="post-title"><a href="%post_url%">%post_title%</a></h2>
+		<h3 class="post-title"><a href="%post_url%">%post_title%</a></h3>
 		<p class="post-excerpt">%post_excerpt%</p>
 	</div>
 </section>
@@ -90,4 +98,33 @@ Following is an CSS example which uses CSS3 Flexbox.
 	width: 100%;
 	box-sizing: border-box;
 }
+```
+
+## Advanced Tips
+
+You can add additional args to the shortcode.
+
+Add a attribute `greeting`.
+
+```
+[child_pages greeting="Hello"]
+```
+
+If you add a `%greeting%` in the template, it will be converted to the value attribute.
+
+```
+add_filter( 'child_pages_shortcode_template', function() {
+	$html =<<<EOL
+	<section id="child-page-%post_id%" class="child-page" style="width: %width%;">
+		<h2>%greeting%</h2>
+		<div class="child-page-container">
+			<div class="post-thumbnail"><a href="%post_url%">%post_thumbnail%</a></div>
+			<h3 class="post-title"><a href="%post_url%">%post_title%</a></h3>
+			<p class="post-excerpt">%post_excerpt%</p>
+		</div>
+	</section>
+EOL;
+
+	return $html;
+} );
 ```

@@ -89,7 +89,7 @@ class Child_Pages_Shortcode
 			$tpl = str_replace( '%post_excerpt%', esc_html( $post->excerpt ), $tpl );
 
 			foreach ( $p as $key => $value ) {
-				$tpl = str_replace( '%' . $key . '%', $value, $tpl );
+				$tpl = str_replace( '%' . $key . '%', esc_html( $value ), $tpl );
 			}
 
 			$html .= $tpl;
@@ -103,7 +103,7 @@ class Child_Pages_Shortcode
 		);
 
 		foreach ( $p as $key => $value ) {
-			$container = str_replace( '%' . $key . '%', $value, $container );
+			$container = str_replace( '%' . $key . '%', esc_html( $value ), $container );
 		}
 
 		$html = str_replace( '%content%', $html, $container );
@@ -123,7 +123,7 @@ class Child_Pages_Shortcode
 	{
 		$html = '<section id="child-page-%post_id%" class="child-page" style="width: %width%;"><div class="child-page-container">';
 		$html .= '<div class="post-thumbnail"><a href="%post_url%">%post_thumbnail%</a></div>';
-		$html .= '<h2 class="post-title"><a href="%post_url%">%post_title%</a></h2>';
+		$html .= '<h3 class="post-title"><a href="%post_url%">%post_title%</a></h3>';
 		$html .= '<p class="post-excerpt">%post_excerpt%</p>';
 		$html .= '</div></section>';
 
