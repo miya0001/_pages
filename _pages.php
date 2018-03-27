@@ -2,25 +2,30 @@
 /*
 Plugin Name: Child Pages Shortcode 2
 Author: Takayuki Miyauchi
-Plugin URI: https://github.com/miya0001/miya-child-pages-shortcode
+Plugin URI: https://github.com/miya0001/miya-underscore-pagess-shortcode
 Description: A WordPress shotcode plugin which displays child pages.
 Version: nightly
 Author URI: http://miya.io/
 */
 
 require_once( dirname( __FILE__ ) . '/vendor/autoload.php' );
-add_action( 'init', function() {
+
+add_action( 'init', '_pages_activate_updater' );
+
+function _pages_activate_updater() {
 	$plugin_slug = plugin_basename( __FILE__ );
 	$gh_user = 'miya0001';
-	$gh_repo = 'miya-child-pages-shortcode';
+	$gh_repo = '_pages';
 	// Activate automatic update.
 	new Miya\WP\GH_Auto_Updater( $plugin_slug, $gh_user, $gh_repo );
-} );
+}
 
-$child_pages_shortcode = new Child_Pages_Shortcode();
+$child_pages_shortcode = new _Pages();
 
-class Child_Pages_Shortcode
+class _Pages
 {
+	const version = "nightly";
+
 	function __construct()
 	{
 		add_action( 'plugins_loaded', array( $this, 'plugins_loaded' ) );
@@ -28,18 +33,27 @@ class Child_Pages_Shortcode
 
 	function plugins_loaded()
 	{
-		add_shortcode( "child_pages", array( $this, "shortcode" ) );
+		add_shortcode( "pages", array( $this, "shortcode" ) );
+		add_action( 'wp_enqueue_scripts', function() {
+			wp_enqueue_script(
+				'underscore-pages',
+				plugins_url( 'js/script.min.js', __FILE__ ),
+				array(),
+				self::version,
+				true
+			);
+		} );
 	}
 
 	public function shortcode( $p )
 	{
-		$default = apply_filters( 'child_pages_shortcode_defaults', array(
+		$default = apply_filters( '_pages_defaults', array(
 			'id' => get_the_ID(),
 			'size' => 'post-thumbnail',
-			'width' => '33%',
+			'col' => 1,
 		) );
 
-		$p = shortcode_atts( $default, $p, 'child_pages' );
+		$p = shortcode_atts( $default, $p, '_pages' );
 
 		return $this->display( $p );
 	}
@@ -65,7 +79,7 @@ class Child_Pages_Shortcode
 		 * @since none
 		 * @param array $args Query args. See http://codex.wordpress.org/Class_Reference/WP_Query#Parameters.
 		 */
-		$args = apply_filters( 'child_pages_shortcode_query', $args, $p );
+		$args = apply_filters( '_pages_query', $args, $p );
 
 		$pages = get_posts( $args );
 		foreach ( $pages as $post ) {
@@ -77,7 +91,7 @@ class Child_Pages_Shortcode
 			 * @since none
 			 * @param object $post Post data.
 			 */
-			$post = apply_filters( 'child_pages_shortcode_post', $post );
+			$post = apply_filters( '_pages_object', $post );
 			$url = get_permalink( $post->ID );
 			$img = get_the_post_thumbnail( $post->ID, $p['size'] );
 
@@ -86,6 +100,7 @@ class Child_Pages_Shortcode
 			$tpl = str_replace( '%post_title%', esc_html( $post->post_title ), $tpl );
 			$tpl = str_replace( '%post_url%', esc_url( $url ), $tpl );
 			$tpl = str_replace( '%post_thumbnail%', $img, $tpl );
+			$tpl = str_replace( '%thumbnail_size%', esc_attr( $p['size'] ), $tpl );
 			$tpl = str_replace( '%post_excerpt%', esc_html( $post->excerpt ), $tpl );
 
 			foreach ( $p as $key => $value ) {
@@ -97,37 +112,22 @@ class Child_Pages_Shortcode
 
 		wp_reset_postdata();
 
-		$container = apply_filters(
-			'child_pages_shortcode_container',
-			'<div class="child-pages">%content%</div>'
+		return sprintf(
+			'<div class="underscore-pagess col-%d">%s</div>',
+			esc_attr( $p['col'] ),
+			$html
 		);
-
-		foreach ( $p as $key => $value ) {
-			$container = str_replace( '%' . $key . '%', esc_html( $value ), $container );
-		}
-
-		$html = str_replace( '%content%', $html, $container );
-
-		/*
-		 * Filter the output.
-		 *
-		 * @since none
-		 * @param string $html	 Output of the child pages.
-		 * @param array  $pages	An array of child pages.
-		 * @param string $template Template HTML for output.
-		 */
-		return apply_filters( "child_pages_shortcode_output", $html, $pages, $p );
 	}
 
 	private function get_template()
 	{
-		$html = '<section id="child-page-%post_id%" class="child-page" style="width: %width%;"><div class="child-page-container">';
+		$html = '<section class="underscore-pages page-%post_id% thumbnail-size-%thumbnail_size%"><div class="underscore-pages-container">';
 		$html .= '<div class="post-thumbnail"><a href="%post_url%">%post_thumbnail%</a></div>';
 		$html .= '<h3 class="post-title"><a href="%post_url%">%post_title%</a></h3>';
 		$html .= '<p class="post-excerpt">%post_excerpt%</p>';
 		$html .= '</div></section>';
 
-		return apply_filters( 'child_pages_shortcode_template', $html );
+		return apply_filters( '_pages_template', $html );
 	}
 
 } // end class
