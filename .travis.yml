@@ -18,7 +18,7 @@ before_script:
 script:
 - vendor/bin/phpunit
 after_success:
-- sed -i -e "s/nightly/${TRAVIS_TAG}/" miya-child-pages-shortcode.php
+- sed -i -e "s/nightly/${TRAVIS_TAG}/" _pages.php
 - curl https://raw.githubusercontent.com/miya0001/auto-build/master/auto-build.sh | bash
 
 deploy:
