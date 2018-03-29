@@ -18,7 +18,7 @@ gulp.task('sass', function () {
 		.pipe(gulp.dest('./src'));
 });
 
-gulp.task('css', function(){
+gulp.task('css', ['sass'], function(){
 	return gulp.src(["src/*.css"])
 		.pipe(concat('style.min.css'))
 		.pipe(minifyCSS())
@@ -26,4 +26,4 @@ gulp.task('css', function(){
 		.pipe(gulp.dest('./css'));
 });
 
-gulp.task('default', ['js', 'sass', 'css']);
+gulp.task('default', ['js', 'css']);

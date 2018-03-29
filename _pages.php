@@ -41,7 +41,7 @@ class _Pages
 		$default = apply_filters( '_pages_defaults', array(
 			'id' => get_the_ID(),
 			'size' => 'post-thumbnail',
-			'col' => 1,
+			'col' => 3,
 		) );
 
 		$p = shortcode_atts( $default, $p, '_pages' );
@@ -120,10 +120,11 @@ class _Pages
 
 	private function get_template()
 	{
-		$html = '<section class="item page-%post_id% thumbnail-size-%thumbnail_size%"><div class="underscore-pages-container">';
-		$html .= '<div class="post-thumbnail"><a href="%post_url%">%post_thumbnail%</a></div>';
-		$html .= '<h3 class="post-title"><a href="%post_url%">%post_title%</a></h3>';
-		$html .= '<p class="post-excerpt">%post_excerpt%</p>';
+		$html = '<section class="item page-%post_id% thumbnail-size-%thumbnail_size%"><div class="item-container">';
+		$html .= '<a href="%post_url%">';
+		$html .= '<div class="post-thumbnail">%post_thumbnail%</div>';
+		$html .= '<h3 class="post-title">%post_title%</h3>';
+		$html .= '</a>';
 		$html .= '</div></section>';
 
 		return apply_filters( '_pages_template', $html );
