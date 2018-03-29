@@ -4,6 +4,10 @@ notifications:
   email:
     on_success: never
     on_failure: change
+branches:
+  only:
+  - master
+  - "/^v?[0-9\\.]+/"
 cache:
 - composer
 - "$HOME/.composer/cache"
@@ -15,17 +19,19 @@ env:
 before_script:
 - bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
 - composer install
+- npm install && npm run build
 script:
-- vendor/bin/phpunit
+- phpunit
 after_success:
 - sed -i -e "s/nightly/${TRAVIS_TAG}/" _pages.php
-- curl https://raw.githubusercontent.com/miya0001/auto-build/master/auto-build.sh | bash
-
+- curl https://raw.githubusercontent.com/miya0001/auto-build/master/auto-build.sh
+  | bash
 deploy:
   provider: releases
+  skip_cleanup: true
   api_key:
-    secure: r68k/l7en/3gzwoHySAwjV8tv47zydCBwYb0TkriBkDuwM7Fvgk+Hz/xPztuOWYY8t3u0sRbY4F6HqjFV8ozEWa0BGW51k8ZhblQ9HVcfyUZ0b/+2QU4bfNrP0CmREWgO/pUKK3yjd0vIVkdH6Otb/Ad5GyPdtpC8YlhhyqfmWnELCWM3zVPCIpe0wn3SryeW3dtfuKRAmjnrIDCxypGkizGWgsUGtbX2G/iUQFGdRzW+XdrVTqxMQhAHFvQw84dOvxKzbxnjHWprRPbFVoyhA17F/S63zO9EhxJMSn4bh7ZNwp32JFzXrStob+M4Hwd/FvxRQhqrD0LSKGvO3gk6wFttC8ljznaf2tRcTu/g9m396BO+EMq5kOXRuxeLpDxdAhkiHnSWr1/qNYpp/s+3aeoUF9b607nqCJa6cPvjhRFlo9d83cvcihRXMdZo7sxlLZ/h9mzzoPrW0JOkYkpa31E7mVRIXLDrU7l7IyXeNFTeSSPf0uuX3wZzHe437toyO6V3h/LDyFXM7bSPzd8ny3fD6N3uSuUj/f22oVB1123Sy6RwKiSwXs0XrcD0JVfoqmO16iLb34X3qZ7KHn8wh/cC3t11oa1NzJaTyazog7zpn4f/egx3ZJRvWFxW+j3la0HESsEOx6Dmbig9gGE5YQWmFHoIlyodsIBC04xQd4=
-  file: miya-child-pages-shortcode.zip
+    secure: UTcIPGXnMbvku66sY8TlSUJo7RL09sQP2aKBlrOCadcm8VvMaNBO1g8R5Qjo1asu881XROSJik+aELQSfNPyBjoBjySIVat8ZzRxEJIULIe5FzHJZLnWLaHcnyn3oNJy92O5+sOXrXYnB786ym1F+IfBXAlhM+r3x6U3WFb9i7OcduBPBrX3afpDA4VVLZNu8y9IDfhhizjuuZntQKB2PgauGAkNjwD3RI9B6trK9RVOhRJlEa0IaxAD+XyjxbxMdBWfJD+1XIXIQOr4JjOCSNwng81OFUVP1ne23kkNIhp7ZVquMkug5GiJCOM45g/eaiGAKz0He4x4FoqkKhRfMRR+1qiPEMlgdfsn2ALuf+1JpXSK+O2ZpKgQmpemgOE2CKYKVq71c3iWr/mFqpG1GfK3Xv/ljzK6M10wb7cUfHjfcKvNINY1z2OZNwvMqYazMFpefUP6bl9hp3TvS4uu/dq/GmzZiL/Y9CLtifDdaqjjQS077BSNi7JOS90LPRp56plOSLLjbmrD8dXWBIeWZ0pUDqpNFwjj265wq58Zf37iYoZFqKJGklQBbVPgGH6Wvjqdm/dbJgtG7zBkvlL+X+kSOY5ZuReUOWg18nBDskEHAFz/SRq4NpZJCDKFtYXJFI4HSWNCJMuk72ZLzdNI50y5knCSD7Xc+veSlGHYiSQ=
+  file: _pages.zip
   on:
     tags: true
     repo: miya0001/_pages
