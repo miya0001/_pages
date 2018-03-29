@@ -34,15 +34,6 @@ class _Pages
 	function plugins_loaded()
 	{
 		add_shortcode( "pages", array( $this, "shortcode" ) );
-		add_action( 'wp_enqueue_scripts', function() {
-			wp_enqueue_script(
-				'underscore-pages',
-				plugins_url( 'js/script.min.js', __FILE__ ),
-				array(),
-				self::version,
-				true
-			);
-		} );
 	}
 
 	public function shortcode( $p )
@@ -54,6 +45,14 @@ class _Pages
 		) );
 
 		$p = shortcode_atts( $default, $p, '_pages' );
+
+		wp_enqueue_script(
+			'underscore-pages',
+			plugins_url( 'js/script.min.js', __FILE__ ),
+			array(),
+			self::version,
+			true
+		);
 
 		return $this->display( $p );
 	}
@@ -113,7 +112,7 @@ class _Pages
 		wp_reset_postdata();
 
 		return sprintf(
-			'<div class="underscore-pagess col-%d">%s</div>',
+			'<div class="underscore-pages col-%d">%s</div>',
 			esc_attr( $p['col'] ),
 			$html
 		);
@@ -121,7 +120,7 @@ class _Pages
 
 	private function get_template()
 	{
-		$html = '<section class="underscore-pages page-%post_id% thumbnail-size-%thumbnail_size%"><div class="underscore-pages-container">';
+		$html = '<section class="item page-%post_id% thumbnail-size-%thumbnail_size%"><div class="underscore-pages-container">';
 		$html .= '<div class="post-thumbnail"><a href="%post_url%">%post_thumbnail%</a></div>';
 		$html .= '<h3 class="post-title"><a href="%post_url%">%post_title%</a></h3>';
 		$html .= '<p class="post-excerpt">%post_excerpt%</p>';

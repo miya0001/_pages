@@ -28,4 +28,4 @@ deploy:
   file: miya-child-pages-shortcode.zip
   on:
     tags: true
-    repo: miya0001/miya-child-pages-shortcode
+    repo: miya0001/_pages
