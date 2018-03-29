@@ -120,12 +120,12 @@ class _Pages
 
 	private function get_template()
 	{
-		$html = '<section class="item page-%post_id% thumbnail-size-%thumbnail_size%"><div class="item-container">';
+		$html = '<section class="item page-%post_id% thumbnail-size-%thumbnail_size%">';
 		$html .= '<a href="%post_url%">';
 		$html .= '<div class="post-thumbnail">%post_thumbnail%</div>';
 		$html .= '<h3 class="post-title">%post_title%</h3>';
 		$html .= '</a>';
-		$html .= '</div></section>';
+		$html .= '</section>';
 
 		return apply_filters( '_pages_template', $html );
 	}
