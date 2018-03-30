@@ -54,7 +54,12 @@ $item-radius: 5px;
         border-top-right-radius: $item-radius;
     }
 
-    .item a
+    .item a,
+    .item a:link,
+    .item a:visited,
+    .item a:hover,
+    .item a:active,
+    .item a:focus
     {
         display: block;
         margin: 0 $item-margin;
@@ -67,11 +72,7 @@ $item-radius: 5px;
         border-radius: $item-radius;
     }
 
-    .item a:link,
-    .item a:visited,
-    .item a:hover,
-    .item a:active,
-    .item a:focus
+    .item a:hover
     {
         background-color: #f7f7f7;
         text-decoration: none;
