@@ -44,6 +44,9 @@
     padding: 0; }
   .underscore-pages .item .post-content {
     padding: 15px; }
+  .underscore-pages .item p {
+    margin-bottom: 0;
+    margin-top: 1em; }
   .underscore-pages .item .post-title {
     margin: 0;
     padding: 0;

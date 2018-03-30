@@ -51,6 +51,13 @@ class _Pages
 		add_post_type_support( 'page', 'excerpt' );
 	}
 
+	/**
+	 * The callback function for the shortcode.
+	 *
+	 * @param $p array The parameters which are passed from the shortcode attributes.
+	 *
+	 * @return string The HTML output for the shortcode.
+	 */
 	public function shortcode( $p )
 	{
 		$default = apply_filters( '_pages_defaults', array(
@@ -97,6 +104,10 @@ class _Pages
 		$html = '';
 
 		$pages = get_posts( $query );
+
+		/**
+		 * @var $post \WP_Post
+		 */
 		foreach ( $pages as $post ) {
 			setup_postdata( $post );
 
@@ -116,7 +127,7 @@ class _Pages
 			$tpl = str_replace( '%post_url%', esc_url( $url ), $tpl );
 			$tpl = str_replace( '%post_thumbnail%', $img, $tpl );
 			$tpl = str_replace( '%thumbnail_size%', esc_attr( $size ), $tpl );
-			$tpl = str_replace( '%post_excerpt%', esc_html( $post->excerpt ), $tpl );
+			$tpl = str_replace( '%post_excerpt%', $this->get_excerpt( $post ), $tpl );
 
 			$html .= $tpl;
 		}
@@ -138,6 +149,29 @@ class _Pages
 		);
 	}
 
+	/**
+	 * Get the excerpt from the post.
+	 *
+	 * @param $post \WP_Post The post object.
+	 *
+	 * @return string The post excerpt.
+	 */
+	private function get_excerpt( $post )
+	{
+		$excerpt = trim( $post->post_excerpt );
+
+		if ( $excerpt ) {
+			return '<p>' . esc_html( $excerpt ) . '</p>';
+		} else {
+			return '';
+		}
+	}
+
+	/**
+	 * Returns the HTML template for the shortcode.
+	 *
+	 * @return string The html template.
+	 */
 	private function get_template()
 	{
 		$html = '<section class="item page-%post_id% thumbnail-size-%thumbnail_size%">';
@@ -145,7 +179,7 @@ class _Pages
 		$html .= '<div class="post-thumbnail">%post_thumbnail%</div>';
 		$html .= '<div class="post-content">';
 		$html .= '<h3 class="post-title">%post_title%</h3>';
-		$html .= '<p>%post_excerpt%</p>';
+		$html .= '%post_excerpt%';
 		$html .= '</div>';
 		$html .= '</a>';
 		$html .= '</section>';
