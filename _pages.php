@@ -1,8 +1,8 @@
 <?php
 /*
-Plugin Name: Child Pages Shortcode 2
+Plugin Name: _Pages
 Author: Takayuki Miyauchi
-Plugin URI: https://github.com/miya0001/miya-underscore-pagess-shortcode
+Plugin URI: https://github.com/miya0001/_pages
 Description: A WordPress shotcode plugin which displays child pages.
 Version: nightly
 Author URI: http://miya.io/
