@@ -42,7 +42,13 @@ class _Pages
 
 	function plugins_loaded()
 	{
+		add_action( 'init', array( $this, 'init' ) );
 		add_shortcode( "pages", array( $this, "shortcode" ) );
+	}
+
+	function init()
+	{
+		add_post_type_support( 'page', 'excerpt' );
 	}
 
 	public function shortcode( $p )
@@ -137,7 +143,10 @@ class _Pages
 		$html = '<section class="item page-%post_id% thumbnail-size-%thumbnail_size%">';
 		$html .= '<a href="%post_url%">';
 		$html .= '<div class="post-thumbnail">%post_thumbnail%</div>';
-		$html .= '<div class="post-content"><h3 class="post-title">%post_title%</h3></div>';
+		$html .= '<div class="post-content">';
+		$html .= '<h3 class="post-title">%post_title%</h3>';
+		$html .= '<p>%post_excerpt%</p>';
+		$html .= '</div>';
 		$html .= '</a>';
 		$html .= '</section>';
 
