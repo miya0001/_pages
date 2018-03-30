@@ -67,7 +67,7 @@ $item-radius: 5px;
         height: 100%;
         box-sizing: border-box;
         background-color: #ffffff;
-        text-decoration: none;
+        text-decoration: none !important;
         box-shadow: none;
         border-radius: $item-radius;
     }
@@ -75,7 +75,7 @@ $item-radius: 5px;
     .item a:hover
     {
         background-color: #f7f7f7;
-        text-decoration: none;
+        text-decoration: none !important;
     }
 
     .item .post-thumbnail
