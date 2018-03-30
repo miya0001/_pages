@@ -20,15 +20,24 @@ function _pages_activate_updater() {
 	new Miya\WP\GH_Auto_Updater( $plugin_slug, $gh_user, $gh_repo );
 }
 
-$child_pages_shortcode = new _Pages();
-
 class _Pages
 {
 	const version = "nightly";
+	const default_thumbnail_size = 'post-thumbnail';
+	const default_col = 3;
 
 	function __construct()
 	{
 		add_action( 'plugins_loaded', array( $this, 'plugins_loaded' ) );
+	}
+
+	public static function get_instance()
+	{
+		static $instance;
+		if ( ! $instance ) {
+			$instance = new _Pages();
+		}
+		return $instance;
 	}
 
 	function plugins_loaded()
@@ -40,30 +49,13 @@ class _Pages
 	{
 		$default = apply_filters( '_pages_defaults', array(
 			'id' => get_the_ID(),
-			'size' => 'post-thumbnail',
-			'col' => 3,
+			'size' => self::default_thumbnail_size,
+			'col' => self::default_col,
 		) );
 
 		$p = shortcode_atts( $default, $p, '_pages' );
 
-		wp_enqueue_script(
-			'underscore-pages',
-			plugins_url( 'js/script.min.js', __FILE__ ),
-			array(),
-			self::version,
-			true
-		);
-
-		return $this->display( $p );
-	}
-
-	private function display( $p )
-	{
-		global $post;
-
-		$html = '';
-
-		$args = array(
+		$query = array(
 			'post_status' => 'publish',
 			'post_type' => 'page',
 			'post_parent' => $p['id'],
@@ -78,9 +70,27 @@ class _Pages
 		 * @since none
 		 * @param array $args Query args. See http://codex.wordpress.org/Class_Reference/WP_Query#Parameters.
 		 */
-		$args = apply_filters( '_pages_query', $args, $p );
+		$query = apply_filters( '_pages_query', $query, $p );
 
-		$pages = get_posts( $args );
+		return $this->display( $query, intval( $p['col'] ), $p['size'] );
+	}
+
+	/**
+	 * Displays posts with the specific arguments.
+	 *
+	 * @param array $query
+	 * @param int $col
+	 * @param string $size
+	 *
+	 * @return string
+	 */
+	public function display( $query, $col = self::default_col, $size = self::default_thumbnail_size )
+	{
+		global $post;
+
+		$html = '';
+
+		$pages = get_posts( $query );
 		foreach ( $pages as $post ) {
 			setup_postdata( $post );
 
@@ -92,28 +102,32 @@ class _Pages
 			 */
 			$post = apply_filters( '_pages_object', $post );
 			$url = get_permalink( $post->ID );
-			$img = get_the_post_thumbnail( $post->ID, $p['size'] );
+			$img = get_the_post_thumbnail( $post->ID, $size );
 
 			$tpl = $this->get_template();
 			$tpl = str_replace( '%post_id%', intval( $post->ID ), $tpl );
 			$tpl = str_replace( '%post_title%', esc_html( $post->post_title ), $tpl );
 			$tpl = str_replace( '%post_url%', esc_url( $url ), $tpl );
 			$tpl = str_replace( '%post_thumbnail%', $img, $tpl );
-			$tpl = str_replace( '%thumbnail_size%', esc_attr( $p['size'] ), $tpl );
+			$tpl = str_replace( '%thumbnail_size%', esc_attr( $size ), $tpl );
 			$tpl = str_replace( '%post_excerpt%', esc_html( $post->excerpt ), $tpl );
-
-			foreach ( $p as $key => $value ) {
-				$tpl = str_replace( '%' . $key . '%', esc_html( $value ), $tpl );
-			}
 
 			$html .= $tpl;
 		}
 
 		wp_reset_postdata();
 
+		wp_enqueue_script(
+			'underscore-pages',
+			plugins_url( 'js/script.min.js', __FILE__ ),
+			array(),
+			self::version,
+			true
+		);
+
 		return sprintf(
 			'<div class="underscore-pages col-%d">%s</div>',
-			esc_attr( $p['col'] ),
+			esc_attr( $col ),
 			$html
 		);
 	}
@@ -130,6 +144,6 @@ class _Pages
 		return apply_filters( '_pages_template', $html );
 	}
 
-} // end class
+}
 
-// eof
+_Pages::get_instance();

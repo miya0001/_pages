@@ -15,3 +15,25 @@
 * `id` - Optional. The Post ID. Default value is the ID of the current page.
 * `size` - Optional. The size of the post thumbnail. Default is `post-thumbnail`.
 * `col` - Optional. Width of the child page block. Default is `3`.
+
+
+### Display posts with the specific query in the theme.
+
+```
+<?php
+
+// Query args for WP_Query.
+$query = array(
+    'post_status' => 'publish',
+    'post_type' => 'post',
+    'posts_per_page' => 10,
+);
+
+// Optional, the number of columns. The default value is `3`.
+$col = 3;
+
+// Optional, the size of the image. The default value is `post-thumbnail`.
+$thumbnil_size = 'post-thumbnail';
+
+_Pages::get_instance->display( $query, $col, $thumbnil_size );
+```
