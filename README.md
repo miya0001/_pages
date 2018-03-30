@@ -14,4 +14,4 @@
 
 * `id` - Optional. The Post ID. Default value is the ID of the current page.
 * `size` - Optional. The size of the post thumbnail. Default is `post-thumbnail`.
-* `col` - Optional. Width of the child page block. Default is `33%`.
+* `col` - Optional. Width of the child page block. Default is `3`.
