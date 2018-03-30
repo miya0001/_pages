@@ -67,7 +67,11 @@ $item-radius: 5px;
         border-radius: $item-radius;
     }
 
-    .item a:hover
+    .item a:link,
+    .item a:visited,
+    .item a:hover,
+    .item a:active,
+    .item a:focus
     {
         background-color: #f7f7f7;
         text-decoration: none;
