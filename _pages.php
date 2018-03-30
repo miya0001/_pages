@@ -123,7 +123,7 @@ class _Pages
 		$html = '<section class="item page-%post_id% thumbnail-size-%thumbnail_size%">';
 		$html .= '<a href="%post_url%">';
 		$html .= '<div class="post-thumbnail">%post_thumbnail%</div>';
-		$html .= '<h3 class="post-title">%post_title%</h3>';
+		$html .= '<div class="post-content"><h3 class="post-title">%post_title%</h3></div>';
 		$html .= '</a>';
 		$html .= '</section>';
 
