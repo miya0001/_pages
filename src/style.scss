@@ -83,20 +83,24 @@ $item-radius: 5px;
         padding: $item-padding;
     }
 
-    .item p
+    .item .post-content p
     {
         margin-bottom: 0;
         margin-top: 1em;
+        font-size: 0.9em;
+        line-height: 1.25em;
+        color: #777777;
     }
 
     .item .post-title
     {
         margin: 0;
         padding: 0;
-        font-size: 0.9em;
+        font-size: 1em;
         line-height: 1.25em;
         overflow-wrap: break-word;
         font-weight: 900;
+        color: #333333;
     }
 }
 

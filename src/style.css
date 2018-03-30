@@ -44,16 +44,20 @@
     padding: 0; }
   .underscore-pages .item .post-content {
     padding: 15px; }
-  .underscore-pages .item p {
+  .underscore-pages .item .post-content p {
     margin-bottom: 0;
-    margin-top: 1em; }
+    margin-top: 1em;
+    font-size: 0.9em;
+    line-height: 1.25em;
+    color: #777777; }
   .underscore-pages .item .post-title {
     margin: 0;
     padding: 0;
-    font-size: 0.9em;
+    font-size: 1em;
     line-height: 1.25em;
     overflow-wrap: break-word;
-    font-weight: 900; }
+    font-weight: 900;
+    color: #333333; }
 
 @media screen and (max-width: 576px) {
   .underscore-pages.col-1 .item,
