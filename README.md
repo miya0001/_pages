@@ -26,7 +26,7 @@
 $query = array(
     'post_status' => 'publish',
     'post_type' => 'page',
-    'post_parent' => $p['id'],
+    'post_parent' => 0,
     'orderby' => 'menu_order',
     'order' => 'ASC',
     'nopaging' => true,
