@@ -25,8 +25,11 @@
 // Query args for WP_Query.
 $query = array(
     'post_status' => 'publish',
-    'post_type' => 'post',
-    'posts_per_page' => 10,
+    'post_type' => 'page',
+    'post_parent' => 0,
+    'orderby' => 'menu_order',
+    'order' => 'ASC',
+    'nopaging' => true,
 );
 
 // Optional, the number of columns. The default value is `3`.
@@ -35,5 +38,5 @@ $col = 3;
 // Optional, the size of the image. The default value is `post-thumbnail`.
 $thumbnil_size = 'post-thumbnail';
 
-_Pages::get_instance->display( $query, $col, $thumbnil_size );
+echo _Pages::get_instance()->display( $query, $col, $thumbnil_size );
 ```
