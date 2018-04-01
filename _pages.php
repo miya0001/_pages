@@ -158,10 +158,19 @@ class _Pages
 	 */
 	private function get_excerpt( $post )
 	{
-		$excerpt = trim( $post->post_excerpt );
+		$line = array();
 
+		$excerpt = trim( $post->post_excerpt );
 		if ( $excerpt ) {
-			return '<p>' . esc_html( $excerpt ) . '</p>';
+			$line[] = esc_html( $excerpt );
+		}
+
+		if ( 'post' === $post->post_type ) {
+			$line[] = get_the_date();
+		}
+
+		if ( $line ) {
+			return '<div class="post-excerpt">' . join( '<br />', $line ) . '</div>';
 		} else {
 			return '';
 		}
@@ -186,7 +195,6 @@ class _Pages
 
 		return apply_filters( '_pages_template', $html );
 	}
-
 }
 
 _Pages::get_instance();
