@@ -38,5 +38,7 @@ $col = 3;
 // Optional, the size of the image. The default value is `post-thumbnail`.
 $thumbnil_size = 'post-thumbnail';
 
-echo _Pages::get_instance()->display( $query, $col, $thumbnil_size );
+if ( class_exists( '_Pages' ) ) {
+    echo _Pages::get_instance()->display( $query, $col, $thumbnil_size );
+}
 ```

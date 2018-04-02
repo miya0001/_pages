@@ -6,6 +6,7 @@ $item-radius: 5px;
 {
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-between;
     margin-left: -$item-margin;
     margin-right: -$item-margin;
     margin-top: 1em;
