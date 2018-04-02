@@ -1,9 +1,10 @@
 {
     "require": {
+        "php": ">=7.0",
         "miya/gh-auto-updater": "^1.0"
     },
     "require-dev": {
-        "symfony/dom-crawler": "*",
-        "symfony/css-selector": "*"
+        "symfony/dom-crawler": "^3.4",
+        "symfony/css-selector": "^3.4"
     }
 }
