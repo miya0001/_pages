@@ -188,7 +188,7 @@ class _Pages
 	private function get_template()
 	{
 		$html = '<section class="item page-%post_id% thumbnail-size-%thumbnail_size%">';
-		$html .= '<a href="%post_url%">';
+		$html .= '<a class="item-wrap" href="%post_url%">';
 		$html .= '<div class="post-thumbnail">%post_thumbnail%</div>';
 		$html .= '<div class="post-content">';
 		$html .= '<h3 class="post-title">%post_title%</h3>';
