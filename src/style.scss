@@ -73,7 +73,7 @@ $item-radius: 5px;
         border-radius: $item-radius;
     }
 
-    .item > a:hover
+    .item a.item-wrap:hover
     {
         background-color: #f7f7f7;
         text-decoration: none !important;
