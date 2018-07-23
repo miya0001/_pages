@@ -124,7 +124,8 @@ class _Pages
 			$title = apply_filters( '_pages_title', $post->post_title, $post, $query );
 			$excerpt = apply_filters( '_pages_excerpt', $this->get_excerpt( $post ), $post, $query );
 
-			$tpl = $this->get_template();
+			$tpl = apply_filters( '_pages_template', $this->get_template(), $post, $query );
+
 			$tpl = str_replace( '%post_id%', intval( $post->ID ), $tpl );
 			$tpl = str_replace( '%post_title%', esc_html( $title ), $tpl );
 			$tpl = str_replace( '%post_url%', esc_url( $url ), $tpl );
@@ -196,7 +197,7 @@ class _Pages
 		$html .= '</a>';
 		$html .= '</section>';
 
-		return apply_filters( '_pages_template', $html );
+		return $html;
 	}
 }
 
