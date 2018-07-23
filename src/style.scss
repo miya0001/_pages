@@ -55,12 +55,12 @@ $item-radius: 5px;
         border-top-right-radius: $item-radius;
     }
 
-    .item a,
-    .item a:link,
-    .item a:visited,
-    .item a:hover,
-    .item a:active,
-    .item a:focus
+    .item .item-wrap,
+    .item .item-wrap:link,
+    .item .item-wrap:visited,
+    .item .item-wrap:hover,
+    .item .item-wrap:active,
+    .item .item-wrap:focus
     {
         display: block;
         margin: 0 $item-margin;
@@ -73,7 +73,7 @@ $item-radius: 5px;
         border-radius: $item-radius;
     }
 
-    .item a:hover
+    .item > a:hover
     {
         background-color: #f7f7f7;
         text-decoration: none !important;
