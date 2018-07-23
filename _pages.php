@@ -121,13 +121,16 @@ class _Pages
 			$url = get_permalink( $post->ID );
 			$img = get_the_post_thumbnail( $post->ID, $size );
 
+			$title = apply_filters( '_pages_title', $post->post_title, $post, $query );
+			$excerpt = apply_filters( '_pages_excerpt', $this->get_excerpt( $post ), $post, $query );
+
 			$tpl = $this->get_template();
 			$tpl = str_replace( '%post_id%', intval( $post->ID ), $tpl );
-			$tpl = str_replace( '%post_title%', esc_html( $post->post_title ), $tpl );
+			$tpl = str_replace( '%post_title%', esc_html( $title ), $tpl );
 			$tpl = str_replace( '%post_url%', esc_url( $url ), $tpl );
 			$tpl = str_replace( '%post_thumbnail%', $img, $tpl );
 			$tpl = str_replace( '%thumbnail_size%', esc_attr( $size ), $tpl );
-			$tpl = str_replace( '%post_excerpt%', $this->get_excerpt( $post ), $tpl );
+			$tpl = str_replace( '%post_excerpt%', $excerpt, $tpl );
 
 			$html .= $tpl;
 		}
